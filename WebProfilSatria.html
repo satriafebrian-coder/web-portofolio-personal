@@ -1,0 +1,1165 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Web Profile</title>
+
+  <link rel="icon" type="image/png" href="logo bintang kecil.jpg">
+
+  <!-- Bootstrap 5 CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"/>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+  <style>      
+    :root{
+      --accent:#6b46ff;
+      --accent-2:#ff4da6;
+      --muted:#6c757d;
+      --card-bg: #ffffff;
+      --glass: rgba(255,255,255,0.6);
+    }
+    body {
+      font-family: 'Poppins', Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      color:#0f172a;
+      background: linear-gradient(180deg,#fbfbfe 0%, #f3f6ff 100%);
+      background-size: 200% 200%;
+      animation: bgShift 14s ease infinite;
+      overflow-x:hidden;
+      position:relative;
+    }
+
+    body::before, body::after{
+      content:''; position:fixed; z-index:0; filter: blur(64px); opacity:.7; pointer-events:none
+    }
+    body::before{
+      width:520px; height:420px; left:-8%; top:-6%;
+      background: radial-gradient(circle at 30% 30%, rgba(107,70,255,0.14), transparent 40%);
+    }
+    body::after{
+      width:460px; height:360px; right:-6%; bottom:-12%;
+      background: radial-gradient(circle at 70% 70%, rgba(255,77,166,0.12), transparent 40%);
+    }
+
+    .navbar-brand { font-weight:700; letter-spacing: .2px; }
+    .nav-link { color: rgba(0,0,0,.7) !important; }
+
+    .hero { padding: 5.5rem 0; z-index:1; position:relative; }
+    .hero-left h1 { font-size: clamp(2rem, 4vw, 3.25rem); font-weight:800; }
+    .hero-left p.lead { color: var(--muted); }
+
+    .hero-card {
+      background: linear-gradient(180deg, rgba(255,255,255,0.9), rgba(255,255,255,0.98));
+      border-radius: 18px;
+      padding: 18px;
+      box-shadow: 0 18px 40px rgba(15,23,42,0.08);
+    }
+
+    .profile-img { width:100%; border-radius:12px; }
+
+    .section-title { font-weight:700; font-size:1.25rem; margin-bottom:1rem; }
+
+    .project-card {
+      border-radius: 12px;
+      overflow: hidden;
+      cursor:pointer;
+      background:white;
+      transition: .28s ease;
+    }
+    .project-card:hover{
+      transform:translateY(-6px);
+      box-shadow:0 18px 40px rgba(11,22,45,0.08);
+    }
+
+    .contact-card { border-radius: 12px; padding: 18px; box-shadow: 0 10px 30px rgba(11,22,45,0.04); }
+
+    footer { padding:28px 0; color: var(--muted); }
+
+    @keyframes bgShift{
+      0%{ background-position:0% 50% }
+      50%{ background-position:100% 50% }
+      100%{ background-position:0% 50% }
+    }
+  
+  /* Garis pemisah antar kategori */
+  .section-divider {
+    border-bottom: 2px solid #ddd;
+    margin: 50px 0 30px;
+    opacity: 0.4;
+  }
+
+  /* Hover effect */
+  .portfolio-img img {
+    transition: 0.35s;
+    cursor: pointer;
+  }
+
+  .portfolio-img img:hover {
+    transform: scale(1.04);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+  }
+
+  h5.category-title {
+    font-weight: 600;
+    margin-bottom: 15px;
+    color: #333;
+  }
+
+  /* Animasi awal saat masuk website */
+.fade-in-start {
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeInUp 2s ease forwards;
+}
+
+@keyframes fadeInUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Animasi saat scroll setiap section */
+.section-animate {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: all 5s ease;
+}
+
+.section-animate.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ===== GLOBAL DARK MODE ===== */
+.dark-mode {
+  background-color: #121212 !important;
+  color: #e6e6e6 !important;
+}
+
+/* Navbar */
+.dark-mode .navbar {
+  background-color: #1e1e1e !important;
+}
+
+/* Card */
+.dark-mode .hero-card,
+.dark-mode .project-card {
+  background-color: #1f1f1f !important;
+  color: #e6e6e6 !important;
+  border-color: #333 !important;
+}
+
+/* Section background */
+.dark-mode section {
+  background-color: #111 !important;
+}
+
+/* Text muted */
+.dark-mode .text-muted {
+  color: #b3b3b3 !important;
+}
+
+/* Carousel controls (kalo kamu pake nanti) */
+.dark-mode .carousel-control-next-icon,
+.dark-mode .carousel-control-prev-icon {
+  filter: invert(1);
+}
+
+.project-card {
+  background: white;
+  border-radius: 12px;
+  min-height: 430px;   /* Samakan tinggi seluruh card */
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+}
+
+.project-card img {
+  height: 180px;
+  object-fit: cover;
+}
+
+  
+    /* Rapikan seluruh card pengalaman */
+    #experience .container > .row > div { display: flex; }
+    #experience .project-card { width: 100%; height: 100%; min-height: 430px; }
+    #experience .project-card img { width: 100%; height: 180px; object-fit: cover; margin-bottom: 0 !important; flex-shrink: 0; }
+    #experience .project-card .carousel { flex-shrink: 0; }
+    #experience .project-card h5 { margin-top: 16px !important; }
+    #experience .project-card:hover { transform: none; }
+
+    /* About: aligned cards and readable competence list */
+    #about p, #visi-misi p, #visi-misi li { line-height: 1.7; text-align: left; }
+    #about .skill-item { padding: 12px 0; border-bottom: 1px solid rgba(128,128,128,.20); }
+    #about .skill-item:last-child { border-bottom: 0; padding-bottom: 0; }
+    #visi-misi li + li { margin-top: 10px; }
+    .dark-mode #about .hero-card, .dark-mode #visi-misi .hero-card { background: #1f1f1f !important; }
+  </style>
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar navbar-expand-lg navbar-light bg-transparent py-3">
+  <div class="container">
+    <a class="navbar-brand" href="#">Satria Febrian</a>
+
+    <!-- Hamburger button untuk layar kecil -->
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navmenu" aria-controls="navmenu" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navmenu">
+      <ul class="navbar-nav ms-auto align-items-lg-center">
+        <li class="nav-item"><a class="nav-link" href="#home">Beranda</a></li>
+        <li class="nav-item"><a class="nav-link" href="#about">Tentang Saya</a></li>
+        <li class="nav-item"><a class="nav-link" href="#visi-misi">Visi & Misi</a></li>
+        <li class="nav-item"><a class="nav-link" href="#prestasi">Prestasi</a></li>
+        <li class="nav-item"><a class="nav-link" href="#experience">Pengalaman</a></li>
+        <li class="nav-item"><a class="nav-link" href="#projects">Projek</a></li>
+        <li class="nav-item"><a class="nav-link" href="#portfolio">Portfolio</a></li>
+        <li class="nav-item"><a class="nav-link" href="#contact">Kontak</a></li>
+
+        <li class="nav-item ms-3">
+            <button id="themeToggle" class="btn btn-outline-dark btn-sm">
+            🌙 Mode Gelap
+            </button>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<header id="home" class="hero">
+  <div class="container">
+    <div class="row align-items-center">
+
+      <div class="col-lg-6 hero-left">
+        <div class="mb-3 text-uppercase text-muted small">Computer Engineering Student • Data Analysis &amp; Industrial Technology</div>
+
+        <h1>Halo — saya <span style="color:var(--accent)">Satria Febrian</span><br>
+        Mahasiswa TRK • Data Analysis &amp; Manufacturing Excellence.</h1>
+
+        <p class="lead">Mengembangkan solusi berbasis teknologi dan data untuk mendukung efisiensi serta perbaikan berkelanjutan.</p>
+
+        <div class="mt-4 d-flex gap-2 flex-wrap">
+          <a class="btn btn-primary btn-lg" href="#contact">Get In Touch</a>
+          <a class="btn btn-outline-secondary btn-lg" href="#portfolio">Lihat Portofolio</a>
+        </div>
+
+        <ul class="list-inline mt-4 small text-muted">
+          <li class="list-inline-item">Research &amp; Innovation</li>
+          <li class="list-inline-item">•</li>
+          <li class="list-inline-item">IoT &amp; Automation</li>
+          <li class="list-inline-item">•</li>
+          <li class="list-inline-item">Team Collaboration</li>
+        </ul>
+      </div>
+
+<!-- RIGHT SIDE -->
+<div class="col-lg-6 hero-right d-flex justify-content-center align-items-center">
+
+    <div class="hero-card text-center w-100 p-3">
+
+        <img 
+            src="satriajelek.jpg"
+            class="profile-img"
+            alt="Foto Satria Febrian"
+        >
+
+        <h4 class="m-0 mt-3">Satria Febrian</h4>
+
+    </div>
+</div>
+
+<style>
+.profile-img {
+    width: 100%;
+    height: 100%;
+    max-height: 550px;   
+    object-fit: cover;
+    border-radius: 18px;
+    border: 6px solid rgba(107,70,255,0.2);
+}
+</style>
+
+    </div>
+
+  </div>
+</header>
+
+<!-- ABOUT -->
+<section id="about" class="py-5">
+  <div class="container">
+    <h3 class="section-title mb-4">Tentang Saya</h3>
+    <div class="row g-4 align-items-stretch">
+      <div class="col-lg-6 d-flex">
+        <div class="hero-card p-4 w-100 d-flex flex-column">
+          <p class="text-muted">Saya merupakan mahasiswa Teknologi Rekayasa Komputer di Sekolah Vokasi IPB University yang memiliki ketertarikan pada analisis data, otomasi, dan pengembangan teknologi untuk mendukung efisiensi operasional. Selama perkuliahan, saya mempelajari statistika komputasi, sistem PLC, Internet of Things (IoT), dan pembelajaran mesin.</p>
+          <p class="text-muted">Pengalaman dalam PKM-PM HEROISM, Mahasiswa Berdampak, serta berbagai proyek dan organisasi membantu saya belajar melakukan riset, mengelola informasi, mengoordinasikan tim, dan mengevaluasi ketercapaian program secara terstruktur.</p>
+          <div class="alert alert-info mb-3">
+            <strong>Fokus Pengembangan Karier</strong>
+            <p class="mb-0 mt-2">Saya tertarik mendalami Manufacturing Excellence (ManEx), khususnya pemanfaatan data dan teknologi untuk memahami proses produksi, mengidentifikasi peluang perbaikan, dan mendukung continuous improvement di lingkungan industri.</p>
+          </div>
+          <div class="mt-auto"><a class="btn btn-outline-primary" href="CV_Satria Febrian.pdf" download>Download CV</a></div>
+        </div>
+      </div>
+      <div class="col-lg-6 d-flex">
+        <div class="hero-card p-4 w-100">
+          <h5 class="fw-bold mb-3">Skill Highlight</h5>
+          <div class="skill-item"><h6 class="mb-1 fw-semibold">Data Analysis</h6><p class="small text-muted mb-0">Statistika komputasi, Microsoft Excel dan RStudio</p></div>
+          <div class="skill-item"><h6 class="mb-1 fw-semibold">Industrial Technology</h6><p class="small text-muted mb-0">Dasar sistem PLC, IoT, sensor dan aktuator</p></div>
+          <div class="skill-item"><h6 class="mb-1 fw-semibold">Programming &amp; Digital Systems</h6><p class="small text-muted mb-0">Pemrograman dan perancangan sistem digital</p></div>
+          <div class="skill-item"><h6 class="mb-1 fw-semibold">Research &amp; Evaluation</h6><p class="small text-muted mb-0">Pengumpulan informasi, monitoring dan evaluasi program</p></div>
+          <div class="skill-item"><h6 class="mb-1 fw-semibold">Problem Solving &amp; Continuous Improvement</h6><p class="small text-muted mb-0">Identifikasi masalah dan pengembangan solusi; minat pada perbaikan proses</p></div>
+          <div class="skill-item"><h6 class="mb-1 fw-semibold">Leadership &amp; Teamwork</h6><p class="small text-muted mb-0">Koordinasi tim, komunikasi dan pengelolaan kegiatan</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- VISI DAN MISI -->
+<section id="visi-misi" class="py-5 bg-secondary-subtle">
+  <div class="container">
+    <h3 class="section-title mb-4">Visi &amp; Misi</h3>
+    <div class="row g-4 align-items-stretch">
+      <div class="col-lg-6 d-flex">
+        <div class="hero-card p-4 w-100">
+          <h5 class="fw-bold mb-3">🎯 Visi</h5>
+          <p class="text-muted mb-0">Menjadi individu yang mampu mengintegrasikan teknologi rekayasa komputer, analisis data, dan pola pikir perbaikan berkelanjutan untuk mendukung proses industri yang lebih efektif, efisien, dan adaptif terhadap perkembangan teknologi.</p>
+        </div>
+      </div>
+      <div class="col-lg-6 d-flex">
+        <div class="hero-card p-4 w-100">
+          <h5 class="fw-bold mb-3">📋 Misi</h5>
+          <ul class="text-muted mb-0">
+            <li>Mengembangkan kemampuan pengolahan dan interpretasi data untuk mendukung pengambilan keputusan.</li>
+            <li>Mempelajari penerapan otomasi, IoT, dan sistem digital dalam proses industri.</li>
+            <li>Mengasah kemampuan identifikasi masalah, evaluasi kinerja, dan continuous improvement.</li>
+            <li>Membangun kolaborasi, kedisiplinan, dan ketelitian dalam menyelesaikan pekerjaan.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRESTASI -->
+<section id="prestasi" class="py-5 bg-primary-subtle">
+  <div class="container">
+
+    <h3 class="section-title mb-4">Prestasi</h3>
+
+    <div class="row g-4">
+
+      <!-- PRESTASI PIMNAS -->
+      <div class="col-md-12">
+        <div class="hero-card p-3 d-flex align-items-center">
+          <img src="pimnas.jpeg" alt="Dokumentasi PIMNAS ke-39" class="rounded me-3" style="width:110px;height:110px;object-fit:cover;">
+          <div>
+            <h5 class="mb-1">Peserta Pekan Ilmiah Mahasiswa Nasional (PIMNAS) ke-39</h5>
+            <p class="text-muted mb-1">PKM-PM HEROISM – IPB University</p>
+            <small class="text-muted">Tahun 2026</small>
+          </div>
+        </div>
+      </div>
+
+<!-- Prestasi 1 -->
+      <div class="col-md-12">
+        <div class="hero-card p-3 d-flex align-items-center">
+
+          <img 
+            src="Prestasi2.jpg" 
+            class="rounded me-3"
+            style="width:110px;height:110px;object-fit:cover;"
+          >
+
+          <div>
+            <h5 class="mb-1">Terbaik 3 Cluster PKM PM Prestasi Goes to You</h5>
+            <p class="text-muted mb-1">Sekolah Vokasi IPB</p>
+            <small class="text-muted">Tahun 2024</small>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Prestasi 2 -->
+      <div class="col-md-12">
+        <div class="hero-card p-3 d-flex align-items-center">
+
+          <img 
+            src="prestasi1.jpg" 
+            class="rounded me-3"
+            style="width:110px;height:110px;object-fit:cover;"
+          >
+
+          <div>
+            <h5 class="mb-1">Finalis National Essay Competition Science Week 2025</h5>
+            <p class="text-muted mb-1">Universitas Sebelas Maret</p>
+            <small class="text-muted">Tahun 2025</small>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Prestasi 3 -->
+      <div class="col-md-12">
+        <div class="hero-card p-3 d-flex align-items-center">
+
+          <img 
+            src="prestasi3.jpg" 
+            class="rounded me-3"
+            style="width:110px;height:110px;object-fit:cover;"
+          >
+
+          <div>
+            <h5 class="mb-1">Juara Harapan 1 Lomba National Esai The 12th Math Competition of Unsika 2025</h5>
+            <p class="text-muted mb-1">Universitas Singaperbangsa Karawang</p>
+            <small class="text-muted">Tahun 2025</small>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+
+<!-- Pengalaman-->
+<section id="experience" class="py-5 bg-warning-subtle">
+  <div class="container">
+    <h3 class="section-title mb-4">Pengalaman</h3>
+
+    <div class="row g-4">
+
+   <!-- CARD KETUA HEROISM -->
+    <div class="col-md-6 col-lg-4">
+      <div class="project-card p-3">
+        <div id="sliderHeroism" class="carousel slide" data-bs-ride="carousel" data-bs-interval="2000">
+          <div class="carousel-inner">
+          <div class="carousel-item active">
+            <img src="heroism1.jpeg" alt="Dokumentasi HEROISM 1" class="d-block w-100 rounded" style="height:180px;object-fit:cover;">
+          </div>
+          <div class="carousel-item">
+            <img src="heroism2.jpeg" alt="Dokumentasi HEROISM 2" class="d-block w-100 rounded" style="height:180px;object-fit:cover;">
+          </div>
+          <div class="carousel-item">
+            <img src="heroism3.jpeg" alt="Dokumentasi HEROISM 3" class="d-block w-100 rounded" style="height:180px;object-fit:cover;">
+          </div>
+          </div>
+          <button class="carousel-control-prev" type="button" data-bs-target="#sliderHeroism" data-bs-slide="prev" aria-label="Foto sebelumnya"><span class="carousel-control-prev-icon" aria-hidden="true"></span></button>
+          <button class="carousel-control-next" type="button" data-bs-target="#sliderHeroism" data-bs-slide="next" aria-label="Foto berikutnya"><span class="carousel-control-next-icon" aria-hidden="true"></span></button>
+        </div>
+        <h5 class="fw-bold mt-3">Ketua Tim PKM-PM HEROISM</h5>
+        <p class="small text-muted">2026</p>
+        <ul class="small text-muted">
+          <li>Melakukan riset pengembangan gagasan berbasis Self-Regulated Learning dan Possible Selves untuk menumbuhkan orientasi masa depan anak pemulung.</li>
+          <li>Memimpin koordinasi dan pelaksanaan program pengabdian kepada masyarakat.</li>
+          <li>Memperoleh pendanaan PKM tingkat nasional dan mengikuti PIMNAS ke-39.</li>
+          <li>Mengoordinasikan pengembangan luaran program, termasuk Jurnal HERO dan Kartu HEROISM yang memperoleh HKI.</li>
+        </ul>
+      </div>
+    </div>
+
+<!-- ---------------- CARD 1 ---------------- -->
+<div class="col-md-6 col-lg-4">
+  <div class="project-card p-3">
+
+    <!-- FOTO SLIDER (AUTO GANTI) -->
+    <div id="slider1" class="carousel slide" data-bs-ride="carousel" data-bs-interval="2000">
+      <div class="carousel-inner">
+
+        <div class="carousel-item active">
+          <img src="soslingmas2025.jpg" class="d-block w-100 rounded" 
+               style="height:180px;object-fit:cover;">
+        </div>
+
+        <div class="carousel-item">
+          <img src="soslingmas2.jpg" class="d-block w-100 rounded"
+               style="height:180px;object-fit:cover;">
+        </div>
+
+        <div class="carousel-item">
+          <img src="soslingmas3.jpg" class="d-block w-100 rounded"
+               style="height:180px;object-fit:cover;">
+        </div>
+
+      </div>
+    </div>
+
+    <!-- TEXT -->
+    <h5 class="fw-bold mt-3">BEM SV IPB – Soslingmas</h5>
+    <p class="small text-muted">2024–2025</p>
+    <ul class="small text-muted">
+      <li>Melakukan Program kerja sosial, Lingkungan, dan Masyarakat</li>
+      <li>Editing konten isu Sosial, Lingkungan, dan Masyarakat</li>
+    </ul>
+
+  </div>
+</div>
+
+
+      <!-- ---------------- CARD 2 ---------------- -->
+      <div class="col-md-6 col-lg-4">
+        <div class="project-card p-3">
+          <img src="BPHTEK.jpg" class="w-100 rounded mb-3" style="height:180px;object-fit:cover;">
+          <h5 class="fw-bold">Sekretaris Umum BPH TRK 61</h5>
+          <p class="small text-muted">2024–Sekarang</p>
+          <ul class="small text-muted">
+            <li>10+ persuratan resmi dan mengurus absensi</li>
+            <li>Notulensi rapat pengurus</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- ---------------- CARD 3 ---------------- -->
+      <div class="col-md-6 col-lg-4">
+        <div class="project-card p-3">
+          <img src="Panatayudha.jpg" class="w-100 rounded mb-3" style="height:180px;object-fit:cover;">
+          <h5 class="fw-bold">Panatayudha Karawang</h5>
+          <p class="small text-muted">2024–Sekarang</p>
+          <ul class="small text-muted">
+            <li>Moderator IGTS</li>
+            <li>Panitia Karawang Education Fair</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- ---------------- CARD 4 ---------------- -->
+      <div class="col-md-6 col-lg-4">
+        <div class="project-card p-3">
+          <img src="MahsiswaBerdampak.jpg" class="w-100 rounded mb-3" style="height:180px;object-fit:cover;">
+          <h5 class="fw-bold">Tim Mahasiswa Berdampak IPB</h5>
+          <p class="small text-muted">2025–Sekarang</p>
+          <ul class="small text-muted">
+            <li>Program Pengabdian dengan pendanaan 120 juta</li>
+            <li>Desain banner, poster, dan PPT</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- ---------------- CARD 5 ---------------- -->
+      <div class="col-md-6 col-lg-4">
+        <div class="project-card p-3">
+          <img src="PKM.jpg" class="w-100 rounded mb-3" style="height:180px;object-fit:cover;">
+          <h5 class="fw-bold">Sekretaris PKM-PM</h5>
+          <p class="small text-muted">2025</p>
+          <ul class="small text-muted">
+            <li>Penyusunan proposal PKM - Lolos Seleksi IPB</li>
+            <li>Riset program pengabdian & dokumentasi</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- ---------------- CARD 6 ---------------- -->
+      <div class="col-md-6 col-lg-4">
+        <div class="project-card p-3">
+          <img src="SLM2.jpg" class="w-100 rounded mb-3" style="height:180px;object-fit:cover;">
+          <h5 class="fw-bold">Sekretaris SLM II Sukabumi</h5>
+          <p class="small text-muted">2025</p>
+          <ul class="small text-muted">
+            <li>20+ persuratan resmi dan mengurus absensi</li>
+            <li>Notulensi rapat</li>
+            <li>PIC Media Branding</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- ---------------- CARD 7 ---------------- -->
+      <div class="col-md-6 col-lg-4">
+        <div class="project-card p-3">
+          <img src="Sikrab.jpg" class="w-100 rounded mb-3" style="height:180px;object-fit:cover;">
+          <h5 class="fw-bold">Sekretaris Siang Keakraban TRK 62</h5>
+          <p class="small text-muted">2025</p>
+          <ul class="small text-muted">
+            <li>20+ persuratan dan mengurus absensi</li>
+            <li>Notulensi rapat</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- ---------------- CARD 8 ---------------- -->
+      <div class="col-md-6 col-lg-4">
+        <div class="project-card p-3">
+          <img src="Tekgather.jpg" class="w-100 rounded mb-3" style="height:180px;object-fit:cover;">
+          <h5 class="fw-bold">Sekretaris TEK Gather Sparks</h5>
+          <p class="small text-muted">2025</p>
+          <ul class="small text-muted">
+            <li>5+ persuratan dan mengurus Absensi</li>
+            <li>Notulensi rapat</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- ---------------- CARD 9 ---------------- -->
+      <div class="col-md-6 col-lg-4">
+        <div class="project-card p-3">
+          <img src="ligatek.jpg" class="w-100 rounded mb-3" style="height:180px;object-fit:cover;">
+          <h5 class="fw-bold">Sekretaris LIGA TEK</h5>
+          <p class="small text-muted">2025</p>
+          <ul class="small text-muted">
+            <li>5+ persuratan dan mengurus absensi</li>
+            <li>Notulensi rapat</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- ---------------- CARD 10 ---------------- -->
+      <div class="col-md-6 col-lg-4">
+        <div class="project-card p-3">
+          <img src="wecasa.jpg" class="w-100 rounded mb-3" style="height:180px;object-fit:cover;">
+          <h5 class="fw-bold">Kepala Divisi Acara — WECASA</h5>
+          <p class="small text-muted">2025</p>
+          <ul class="small text-muted">
+            <li>Membuat konsep kegiatan pengabdian kepada masyarkat Desa</li>
+            <li>Melakukan riset inovasi, terkait inovasi yang dibawakan</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- ---------------- CARD 11 ---------------- -->
+      <div class="col-md-6 col-lg-4">
+        <div class="project-card p-3">
+          <img src="rewilding.jpg" class="w-100 rounded mb-3" style="height:180px;object-fit:cover;">
+          <h5 class="fw-bold">Kepala Divisi Media Branding – Rewilding</h5>
+          <p class="small text-muted">2025</p>
+          <ul class="small text-muted">
+            <li>Kegiatan aksi lingkungan penanaman mangrove</li>
+            <li>Meminpin 9 orang untuk mendesain, konten, publikasi</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- ---------------- CARD 12 ---------------- -->
+      <div class="col-md-6 col-lg-4">
+        <div class="project-card p-3">
+          <img src="racon.jpg" class="w-100 rounded mb-3" style="height:180px;object-fit:cover;">
+          <h5 class="fw-bold">Kepala Divisi K3 — Ramadhan Connect</h5>
+          <p class="small text-muted">2025</p>
+          <ul class="small text-muted">
+            <li>Membuat konsep keamanan & kebersihan acara</li>
+            <li>Memimpin 8 staf dan memastikan acara berjalan lancar</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- ---------------- CARD 13 ---------------- -->
+      <div class="col-md-6 col-lg-4">
+        <div class="project-card p-3">
+          <img src="portal.jpg" class="w-100 rounded mb-3" style="height:180px;object-fit:cover;">
+          <h5 class="fw-bold">Event Management – Portal 7</h5>
+          <p class="small text-muted">2025</p>
+          <ul class="small text-muted">
+            <li>Mengatur keseluruhan alur acara</li>
+            <li>PIC Narasumber</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- ---------------- CARD 14 ---------------- -->
+      <div class="col-md-6 col-lg-4">
+        <div class="project-card p-3">
+          <img src="HE.jpg" class="w-100 rounded mb-3" style="height:180px;object-fit:cover;">
+          <h5 class="fw-bold">Logistik – Health Enrichment</h5>
+          <p class="small text-muted">2025</p>
+          <ul class="small text-muted">
+            <li>Pengadaan barang</li>
+            <li>Konsumsi peserta dan panitia</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- ---------------- CARD 15 ---------------- -->
+      <div class="col-md-6 col-lg-4">
+        <div class="project-card p-3">
+          <img src="psb.jpg" class="w-100 rounded mb-3" style="height:180px;object-fit:cover;">
+          <h5 class="fw-bold">Logistik – Pekan Seni Budaya</h5>
+          <p class="small text-muted">2025</p>
+          <ul class="small text-muted">
+            <li>Pengadaan barang</li>
+            <li>PIC Divisi perlombaan</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- ---------------- CARD 16 ---------------- -->
+      <div class="col-md-6 col-lg-4">
+        <div class="project-card p-3">
+          <img src="Makrab.jpg" class="w-100 rounded mb-3" style="height:180px;object-fit:cover;">
+          <h5 class="fw-bold">Steering Committee Makrab TRK 61</h5>
+          <p class="small text-muted">2025</p>
+          <ul class="small text-muted">
+            <li>Mengawasi & evaluasi panitia</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- ---------------- CARD 17 ---------------- -->
+      <div class="col-md-6 col-lg-4">
+        <div class="project-card p-3">
+          <img src="paskibSMA.jpg" class="w-100 rounded mb-3" style="height:180px;object-fit:cover;">
+          <h5 class="fw-bold">Pelatih Paskibra SMAN 2 Cikampek</h5>
+          <p class="small text-muted">2022–2024</p>
+          <ul class="small text-muted">
+            <li>Melatih PBB & etika</li>
+            <li>Membawa pasukan juara tingkat kabupaten–nasional</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- ---------------- CARD 18 ---------------- -->
+      <div class="col-md-6 col-lg-4">
+        <div class="project-card p-3">
+          <img src="paskibSMP.jpg" class="w-100 rounded mb-3" style="height:180px;object-fit:cover;">
+          <h5 class="fw-bold">Pelatih Paskibra SMPN 2 Kotabaru</h5>
+          <p class="small text-muted">2022–2024</p>
+          <ul class="small text-muted">
+            <li>Latihan PBB & etika</li>
+            <li>Membawa pasukan juara tingkat kabupaten–nasional</li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- PROJECT SECTION -->
+<section id="projects" class="py-5 bg-success-subtle">
+  <div class="container">
+    <h3 class="section-title mb-4 text-start fw-bold">Projek</h3>
+
+    <div class="row g-4">
+
+      <!-- ===================== PROJECT 1 ===================== -->
+      <div class="col-md-4">
+        <div class="card shadow-sm border-0" style="border-radius:15px;">
+          
+          <!-- FOTO 4:5 -->
+          <img src="projek1.jpg" class="card-img-top" 
+               style="aspect-ratio:4/5; object-fit:cover; border-radius:15px 15px 0 0;">
+
+          <div class="card-body text-center">
+            <h5 class="card-title">Elektronika - Keran Air Otomatis</h5>
+            <button class="btn btn-primary btn-sm mt-2" data-bs-toggle="modal" data-bs-target="#projek1">
+              Lihat Deskripsi
+            </button>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- ===================== PROJECT 2 ===================== -->
+      <div class="col-md-4">
+        <div class="card shadow-sm border-0" style="border-radius:15px;">
+          
+          <img src="projek2.jpg" class="card-img-top" 
+               style="aspect-ratio:4/5; object-fit:cover; border-radius:15px 15px 0 0;">
+
+          <div class="card-body text-center">
+            <h5 class="card-title">Rangkaian Logika dan Tebik Digital - Alat Penghitung Pengunjung Otomatis</h5>
+            <button class="btn btn-primary btn-sm mt-2" data-bs-toggle="modal" data-bs-target="#projek2">
+              Lihat Deskripsi
+            </button>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- ===================== PROJECT 3 ===================== -->
+      <div class="col-md-4">
+        <div class="card shadow-sm border-0" style="border-radius:15px;">
+          
+          <img src="projek3.jpg" class="card-img-top" 
+               style="aspect-ratio:4/5; object-fit:cover; border-radius:15px 15px 0 0;">
+
+          <div class="card-body text-center">
+            <h5 class="card-title">Teknologi Sensor dan Akuator - Kipas Pendektesi Suhu Panas</h5>
+            <button class="btn btn-primary btn-sm mt-2" data-bs-toggle="modal" data-bs-target="#projek3">
+              Lihat Deskripsi
+            </button>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- PROJECT ANTRAK -->
+      <div class="col-md-4">
+        <div class="card shadow-sm border-0" style="border-radius:15px;">
+          <img src="antrac.jpeg" alt="Robot ANTRAK" class="card-img-top" style="aspect-ratio:4/5;object-fit:cover;border-radius:15px 15px 0 0;">
+          <div class="card-body text-center">
+            <h5 class="card-title">ANTRAK – Robot Pendeteksi Penyakit Antraknosa pada Cabai</h5>
+            <p class="small text-muted">Teknologi Bengkel Elektromekanik dan Perancangan Sistem Digital</p>
+            <button class="btn btn-primary btn-sm mt-2" data-bs-toggle="modal" data-bs-target="#projek4">Lihat Deskripsi</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ========== MODAL 1 ========== -->
+<div class="modal fade" id="projek1" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Elektronika - Keran Air Otomatis</h5>
+        <button class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        Projek ini membuat keran air otomatis yang bekerja menggunakan sensor infrared. 
+        Sistem akan mendeteksi keberadaan tangan di depan sensor dan secara otomatis membuka aliran air tanpa perlu sentuhan. 
+        Tujuan projek ini adalah meningkatkan kebersihan dan menghemat penggunaan air. 
+        Rangkaian dibuat menggunakan sensor IR, relay, dan komponen elektronik dasar untuk mengontrol mekanisme buka-tutup keran.
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ========== MODAL 2 ========== -->
+<div class="modal fade" id="projek2" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Rangkaian Logika dan Tebik Digital - Alat Penghitung Pengunjung Otomatis</h5>
+        <button class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        Projek ini adalah alat penghitung pengunjung otomatis yang bekerja sepenuhnya menggunakan IC gerbang logika tanpa mikrokontroler. 
+        Sistem mendeteksi orang yang masuk dan keluar ruangan, lalu menambah atau mengurangi angka pada counter secara otomatis. 
+        Projek ini melibatkan penggunaan gerbang AND, OR, NOT, flip-flop, dan rangkaian counter untuk memproses sinyal masuk dan keluar.
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ========== MODAL 3 ========== -->
+<div class="modal fade" id="projek3" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Teknologi Sensor dan Akuator - Kipas Pendektesi Suhu Panas</h5>
+        <button class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        Projek ini membuat kipas otomatis yang menyala berdasarkan suhu di sekitar. 
+        Sensor suhu terhubung ke Arduino Mega sebagai pusat pengolah data, sementara modul ESP digunakan untuk pemantauan atau kendali jarak jauh. 
+        Ketika suhu mencapai batas tertentu, kipas akan menyala otomatis dan mati kembali saat suhu turun. 
+        Projek ini menunjukkan integrasi antara sensor suhu, aktuator, Arduino, dan modul komunikasi.
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL PROJECT ANTRAK -->
+<div class="modal fade" id="projek4" tabindex="-1" aria-labelledby="antrakTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="antrakTitle">ANTRAK – Robot Pendeteksi Penyakit Antraknosa pada Cabai</h5>
+        <button class="btn-close" data-bs-dismiss="modal" aria-label="Tutup"></button>
+      </div>
+      <div class="modal-body" style="text-align:justify;">
+        ANTRAK merupakan robot pendeteksi penyakit antraknosa pada cabai yang dikembangkan melalui mata kuliah Teknologi Bengkel Elektromekanik dan Perancangan Sistem Digital. Robot ini dirancang untuk membantu identifikasi dini penyakit antraknosa pada cabai guna mendukung pemantauan kesehatan tanaman dan mengurangi potensi kerugian hasil pertanian. Projek ini mengintegrasikan konsep elektronika, elektromekanik, dan perancangan sistem digital sebagai penerapan teknologi rekayasa komputer di bidang pertanian.
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PORTFOLIO -->
+<section id="portfolio" class="py-5 bg-info-subtle">
+  <div class="container">
+
+    <h3 class="section-title mb-4 text-start fw-bold">Portofolio</h3>
+
+    <!-- INOVASI DAN HKI -->
+    <div class="section-divider"></div>
+    <h5 class="category-title">📌 Inovasi &amp; Hak Kekayaan Intelektual (HKI)</h5>
+    <div class="row g-4 portfolio-img">
+      <div class="col-md-6">
+        <div class="hero-card p-3 h-100">
+          <img src="jurnalhero.png" alt="Jurnal HERO" class="img-fluid rounded shadow-sm w-100" style="height:350px;object-fit:contain;">
+          <div class="mt-3">
+            <span class="badge bg-success">HKI Registered</span>
+            <h5 class="fw-bold mt-2">Jurnal HERO</h5>
+            <p class="small text-muted">PKM-PM HEROISM | 2026</p>
+            <p class="small text-muted" style="text-align:justify;">Media pembelajaran untuk mendukung refleksi diri dan pengembangan orientasi masa depan anak melalui program HEROISM. Karya tim ini telah memperoleh perlindungan Hak Kekayaan Intelektual (HKI).</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="hero-card p-3 h-100">
+          <img src="kartuheroism.png" alt="Kartu HEROISM" class="img-fluid rounded shadow-sm w-100" style="height:350px;object-fit:contain;">
+          <div class="mt-3">
+            <span class="badge bg-success">HKI Registered</span>
+            <h5 class="fw-bold mt-2">Kartu HEROISM</h5>
+            <p class="small text-muted">PKM-PM HEROISM | 2026</p>
+            <p class="small text-muted" style="text-align:justify;">Media edukasi interaktif dalam program HEROISM untuk mendukung eksplorasi potensi diri dan orientasi masa depan anak. Karya tim ini telah memperoleh perlindungan Hak Kekayaan Intelektual (HKI).</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+<!-- ========= DESAIN BROSUR ========= -->
+    <div class="section-divider"></div>
+    <h5 class="category-title">📌 Desain Brosur</h5>
+    <div class="row g-4 portfolio-img">
+      <div class="col-md-6">
+        <div class="ratio ratio-16x9">
+          <img src="brosur1.jpg" class="img-fluid rounded shadow-sm">
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="ratio ratio-16x9">
+          <img src="brosur2.jpg" class="img-fluid rounded shadow-sm">
+        </div>
+      </div>
+    </div>
+
+    <!-- ========= POSTER ========= -->
+    <div class="section-divider"></div>
+    <h5 class="category-title">📌 Poster</h5>
+    <div class="row g-4 portfolio-img">
+      <div class="col-6 col-md-4 col-lg-2"><div class="ratio" style="--bs-aspect-ratio: 178%;"><img src="poster1.jpg" class="img-fluid rounded shadow-sm"></div></div>
+      <div class="col-6 col-md-4 col-lg-2"><div class="ratio" style="--bs-aspect-ratio: 178%;"><img src="poster2.jpg" class="img-fluid rounded shadow-sm"></div></div>
+      <div class="col-6 col-md-4 col-lg-2"><div class="ratio" style="--bs-aspect-ratio: 178%;"><img src="poster3.jpg" class="img-fluid rounded shadow-sm"></div></div>
+      <div class="col-6 col-md-4 col-lg-2"><div class="ratio" style="--bs-aspect-ratio: 178%;"><img src="poster4.jpg" class="img-fluid rounded shadow-sm"></div></div>
+      <div class="col-6 col-md-4 col-lg-2"><div class="ratio" style="--bs-aspect-ratio: 178%;"><img src="poster5.jpg" class="img-fluid rounded shadow-sm"></div></div>
+      <div class="col-6 col-md-4 col-lg-2"><div class="ratio" style="--bs-aspect-ratio: 178%;"><img src="poster6.jpg" class="img-fluid rounded shadow-sm"></div></div>
+    </div>
+
+    <!-- ========= DESAIN PPT ========= -->
+    <div class="section-divider"></div>
+    <h5 class="category-title">📌 Desain PPT</h5>
+    <div class="row g-4 portfolio-img">
+      <div class="col-md-4"><div class="ratio ratio-16x9"><img src="ppt4.jpg" class="img-fluid rounded shadow-sm"></div></div>
+      <div class="col-md-4"><div class="ratio ratio-16x9"><img src="ppt1.jpg" class="img-fluid rounded shadow-sm"></div></div>
+      <div class="col-md-4"><div class="ratio ratio-16x9"><img src="ppt2.jpg" class="img-fluid rounded shadow-sm"></div></div>
+      <div class="col-md-4"><div class="ratio ratio-16x9"><img src="ppt5.jpg" class="img-fluid rounded shadow-sm"></div></div>
+      <div class="col-md-4"><div class="ratio ratio-16x9"><img src="ppt3.jpg" class="img-fluid rounded shadow-sm"></div></div>
+    </div>
+
+    <!-- ========= INFOGRAFIS ========= -->
+    <div class="section-divider"></div>
+    <h5 class="category-title">📌 Infografis</h5>
+    <div class="row g-4 portfolio-img">
+      <div class="col-6 col-md-3"><div class="ratio" style="--bs-aspect-ratio: 178%;"><img src="infografis1.jpg" class="img-fluid rounded shadow-sm"></div></div>
+      <div class="col-6 col-md-3"><div class="ratio" style="--bs-aspect-ratio: 178%;"><img src="infografis3.jpg" class="img-fluid rounded shadow-sm"></div></div>
+      <div class="col-6 col-md-3"><div class="ratio" style="--bs-aspect-ratio: 178%;"><img src="infografis4.jpg" class="img-fluid rounded shadow-sm"></div></div>
+      <div class="col-6 col-md-3"><div class="ratio" style="--bs-aspect-ratio: 178%;"><img src="infografis2.jpg" class="img-fluid rounded shadow-sm"></div></div>
+    </div>
+
+    <!-- ========= FEED IG ========= -->
+    <div class="section-divider"></div>
+    <h5 class="category-title">📌 Feed Instagram</h5>
+    <div class="row g-4 portfolio-img">
+      <div class="col-md-4">
+        <div class="ratio" style="--bs-aspect-ratio: 200%;">
+          <img src="feeds1.jpg" class="img-fluid rounded shadow-sm">
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="ratio" style="--bs-aspect-ratio: 200%;">
+          <img src="feeds2.jpg" class="img-fluid rounded shadow-sm">
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="ratio" style="--bs-aspect-ratio: 200%;">
+          <img src="feeds3.jpg" class="img-fluid rounded shadow-sm">
+        </div>
+      </div>
+      <div class="col-md-4 mt-4">
+        <div class="ratio ratio-1x1">
+          <img src="feeds5.jpg" class="img-fluid rounded shadow-sm">
+        </div>
+      </div>
+    </div>
+
+    <!-- ========= GUIDEBOOK ========= -->
+    <div class="section-divider"></div>
+    <h5 class="category-title">📌 Guidebook & Proposal</h5>
+    <div class="row g-4 portfolio-img">
+      <div class="col-md-4"><div class="ratio ratio-1x1"><img src="mockup2.jpg" class="img-fluid rounded shadow-sm"></div></div>
+      <div class="col-md-4"><div class="ratio ratio-1x1"><img src="mockup1.jpg" class="img-fluid rounded shadow-sm"></div></div>
+    </div>
+
+    <!-- ========= PROTOTYPE ========= -->
+    <div class="section-divider"></div>
+    <h5 class="category-title">📌 Prototype Aplikasi</h5>
+    <div class="row g-4 portfolio-img">
+      <div class="col-md-4"><div class="ratio ratio-16x9"><img src="prototype3.jpg" class="img-fluid rounded shadow-sm"></div></div>
+      <div class="col-md-4"><div class="ratio ratio-16x9"><img src="prototype2.jpg" class="img-fluid rounded shadow-sm"></div></div>
+      <div class="col-md-4"><div class="ratio ratio-16x9"><img src="prototype1.jpg" class="img-fluid rounded shadow-sm"></div></div>
+    </div>
+
+    <!-- ========= LOGO ========= -->
+    <div class="section-divider"></div>
+    <h5 class="category-title">📌 Logo</h5>
+    <div class="col-md-3 portfolio-img">
+      <div class="ratio ratio-1x1">
+        <img src="logo.jpg" class="img-fluid rounded shadow-sm">
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" class="py-5 bg-light">
+  <div class="container">
+    <h3 class="section-title mb-5">Kontak</h3>
+
+    <div class="row g-4">
+      <div class="col-lg-12">
+        <div class="hero-card p-5">
+          <h5 class="mb-4">📞 Informasi Kontak</h5>
+
+          <p class="text-muted mb-3"><strong>Lokasi:</strong> Bogor, Indonesia</p>
+          <p class="text-muted mb-3"><strong>Telepon:</strong> +62 856-2464-8217</p>
+
+          <p class="text-muted mb-3">
+            <strong>LinkedIn:</strong>  
+            <a href="https://www.linkedin.com/in/satria-febrian-b03382318?utm_source=share_via&utm_content=profile&utm_medium=member_ios" target="_blank" class="text-decoration-none">linkedin.com/in/satria febrian</a>
+          </p>
+
+          <p class="text-muted mb-3">
+            <strong>Instagram:</strong>  
+            <a href="https://www.instagram.com/satria.fbrn?igsh=OTExMnYxbHl2c2Rm&utm_source=qr" target="_blank" class="text-decoration-none">@satria.fbrn</a>
+          </p>
+
+          <p class="text-muted mb-4">
+            <strong>TikTok:</strong>  
+            <a href="https://www.tiktok.com/@satria.fbrn?_r=1&_t=ZS-91fVLi3HTRl" target="_blank" class="text-decoration-none">@satria.fbrn</a>
+          </p>
+
+          <div class="mt-4">
+            <iframe style="width:100%;height:220px;border:0;border-radius:12px;"
+                    src="https://www.google.com/maps/embed?pb=!1m18..."
+                    loading="lazy"></iframe>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="border-top mt-5 py-3">
+  <div class="container d-flex justify-content-between align-items-center">
+    <small>© <span id="year"></span> Satria Febrian — All rights reserved.</small>
+
+    <div>
+      <a class="text-muted me-3" href="#">Privacy</a>
+      <a class="text-muted" href="#">Terms</a>
+    </div>
+  </div>
+</footer>
+
+
+<!-- SCRIPT -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+// Set tahun footer otomatis
+document.getElementById('year').textContent = new Date().getFullYear();
+
+// Validasi Contact Form
+const contactForm = document.getElementById("contactForm");
+if (contactForm) {
+
+// Buat div notifikasi sukses
+const successMessage = document.createElement("div");
+successMessage.className = "alert alert-success mt-3 d-none";
+successMessage.textContent = "Pesan Anda telah terkirim!";
+contactForm.appendChild(successMessage);
+
+contactForm.addEventListener("submit", function(e){
+  e.preventDefault();
+
+  // Hapus notifikasi sukses sebelumnya
+  successMessage.classList.add("d-none");
+
+  // Jalankan validasi
+  if (!this.checkValidity()) {
+    this.classList.add("was-validated"); // Tambahkan visual feedback
+    return; // Hentikan submit jika form tidak valid
+  }
+
+  // Jika valid
+  this.classList.remove("was-validated");
+
+  let btn = this.querySelector("button[type=submit]");
+  btn.disabled = true;
+  btn.textContent = "Mengirim...";
+
+  // Simulasi pengiriman
+  setTimeout(() => {
+    // Tampilkan pesan sukses
+    successMessage.classList.remove("d-none");
+
+    btn.disabled = false;
+    btn.textContent = "Kirim Pesan";
+    this.reset();
+  }, 800);
+});
+
+}
+
+// Animasi saat pertama kali buka website
+window.addEventListener("load", () => {
+  document.body.classList.add("fade-in-start");
+});
+
+// Animasi setiap section pas discroll
+const sections = document.querySelectorAll(".section-animate");
+
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add("show");
+    }
+  });
+}, {
+  threshold: 0.2
+});
+
+sections.forEach(sec => observer.observe(sec));
+
+const btn = document.getElementById("themeToggle");
+const body = document.body;
+
+// Cek mode sebelumnya (biar ga reset kalau refresh)
+if (localStorage.getItem("theme") === "dark") {
+  body.classList.add("dark-mode");
+  btn.textContent = "☀️ Mode Terang";
+  btn.classList.remove("btn-outline-dark");
+  btn.classList.add("btn-outline-light");
+}
+
+btn.addEventListener("click", () => {
+  body.classList.toggle("dark-mode");
+
+  if (body.classList.contains("dark-mode")) {
+    btn.textContent = "☀️ Mode Terang";
+    btn.classList.remove("btn-outline-dark");
+    btn.classList.add("btn-outline-light");
+    localStorage.setItem("theme", "dark");
+  } else {
+    btn.textContent = "🌙 Mode Gelap";
+    btn.classList.remove("btn-outline-light");
+    btn.classList.add("btn-outline-dark");
+    localStorage.setItem("theme", "light");
+  }
+});
+
+</script>
+</body>
+</html>
